@@ -1,0 +1,11 @@
+<main>
+
+    <div>
+        <input type="textbox" [(ngModel)]="html">
+        <input type="textbox" [(ngModel)]="componentData">
+        <Button ng-click="craeteComponent">Create</Button>
+    </div>
+
+    <ng-template componentCreator [componentCreate]="dynamicComponent">
+    </ng-template>
+</main>
