@@ -3,14 +3,14 @@ import { Directive, Input, OnInit, ViewContainerRef, ComponentFactoryResolver, C
 @Directive({
     selector: '[componentCreator]',
 })
-export class ComponentCreatorDirective implements AfterContentChecked { 
+export class ComponentCreatorDirective implements AfterContentChecked {
 
     @Input()
     componentFactory: ComponentFactory<any>;
 
     ngAfterContentChecked(): void {
         this.element.clear();
-        let componentRef = this.element.createComponent(this.componentFactory); 
+        let componentRef = this.element.createComponent(this.componentFactory);
         componentRef.changeDetectorRef.detectChanges();
     }
 
