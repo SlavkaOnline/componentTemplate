@@ -1,19 +1,20 @@
-import { Directive, Input, OnInit, ViewContainerRef, ComponentFactoryResolver, } from '@angular/core';
+import { Directive, Input, OnInit, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, AfterContentChecked } from '@angular/core';
 
 @Directive({
     selector: '[componentCreator]',
 })
-export class ComponentCreatorDirective implements OnInit { 
+export class ComponentCreatorDirective implements AfterContentChecked { 
 
     @Input()
-    componentCreate: any;
+    componentFactory: ComponentFactory<any>;
 
-    ngOnInit(): void {
-        let componentInstance = this.componentFactory.resolveComponentFactory(this.componentCreate);
-        this.element.createComponent(componentInstance); 
+    ngAfterContentChecked(): void {
+        this.element.clear();
+        let componentRef = this.element.createComponent(this.componentFactory); 
+        componentRef.changeDetectorRef.detectChanges();
     }
 
-    constructor(private element: ViewContainerRef, private componentFactory: ComponentFactoryResolver){
+    constructor(private element: ViewContainerRef, ){
 
     }
 }
