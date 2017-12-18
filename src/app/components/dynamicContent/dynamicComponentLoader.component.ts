@@ -2,6 +2,8 @@ import { Component, OnInit, NgModule, Compiler, Injector, EmbeddedViewRef, Eleme
 import { FormsModule } from '@angular/forms';
 import * as ts from 'typescript';
 import { inspect } from 'util';
+import { IDataContext } from '../../abstract/IDataContext';
+import { ApiService } from '../../services/api.services';
 
 @Component({
     selector: 'dynamic-componentLoader',
@@ -48,6 +50,7 @@ export class DynamicComponentLoader implements OnInit {
         resolveComponentFactory(DynamicComponent)
         .create(this.injector);
         const instance = (<DynamicComponent>componentRef.instance);
+        (<IDataContext>instance.dataContext).api = this.injector.get(ApiService);
         this.appRef.attachView(componentRef.hostView);
         const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
         .rootNodes[0] as HTMLElement;
